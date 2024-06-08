@@ -1,6 +1,6 @@
 remote_theme: jekyll/minima
 title: Learning Data Science UFSM
-description: 👨‍💻 WIP...
+description: 👨‍💻 Website destinado a conter os conteúdos de apoio das aulas de Ciência de Dados da UFSM.
 plugins:
   - jekyll-feed
   - jekyll-seo-tag

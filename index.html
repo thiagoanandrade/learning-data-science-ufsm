@@ -8,32 +8,54 @@
 </head>
 
 <body>
-    <h1>
-        Checking out Github's folder comportament in Github Pages...
-    </h1>
-    <div id="container">
-    </div>
+    <div id="container"></div>
 </body>
 <script>
-    (async () => {
-        const repo = "repos/luabagg/learning-data-science-ufsm"
+    const repo = "repos/luabagg/learning-data-science-ufsm"
+    const baseFolder = "docs"
+    const baseTreeURL = `https://api.github.com/${repo}/git/trees/`
 
-        const response = await fetch(`https://api.github.com/${repo}/contents/docs`);
-        const baseTreeURL = `https://api.github.com/${repo}/git/trees/`
+    async function recursiveListing(path, folderSha) {
+        const treeResponse = await fetch(baseTreeURL + folderSha);
+        const treeData = await treeResponse.json();
 
-        const data = await response.json();
-        let htmlString = "<ul>";
+        let htmlString = "<ul>"
+        let it = 0
+        for (let item of treeData.tree) {
+            const itemPath = `${path}/${item.path}`
 
-        for (let folder of data) {
-            try {
-                const treeResponse = await fetch(baseTreeURL + folder.sha);
-                const treeData = await response.json();
-                for (let item of treeData) {
-                    htmlString += `<li><a href="${folder.path}/${item.path}">${item.path}</a></li>`;
-                }
-            } catch {}
+            if (item.type == "tree") {
+                htmlString += await recursiveListing(itemPath, item.sha)
+            } else if (item.type == "blob") {
+                htmlString += `<li><a href="${itemPath}">${item.path}</a></li>`;
+            } else {
+                continue
+            }
+
+            it++
         }
         htmlString += "</ul>";
+
+        if (it == 0) {
+            return ""
+        }
+
+        return htmlString
+    }
+
+    (async () => {
+        const response = await fetch(`https://api.github.com/${repo}/contents/${baseFolder}`);
+        const data = await response.json();
+
+        htmlString = "<div>"
+        for (let dirs of data) {
+            if (dirs.type != "dir") {
+                continue
+            }
+            htmlString += `<h2>${dirs.name}</h2>`
+            htmlString += await recursiveListing(dirs.path, dirs.sha)
+        }
+
         document.getElementById("container").innerHTML = htmlString;
     })()
 </script>
