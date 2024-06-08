@@ -1,0 +1,8 @@
+remote_theme: jekyll/minima
+title: Learning Data Science UFSM
+description: 👨‍💻 WIP...
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+minima:
+ skin: auto
