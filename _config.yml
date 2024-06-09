@@ -5,11 +5,9 @@ author:
 github_username: luabagg
 title: Learning Data Science UFSM
 description: >
-  👨‍💻 Website destinado a conter os conteúdos de apoio das aulas de Ciência de Dados da UFSM.
+  👨‍💻 Website destinado a listar os conteúdos de apoio das aulas de Ciência de Dados da UFSM.
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
 minima:
-  skin: solarized
-  social_links:
-    - { platform: github, user_url: "https://github.com/luabagg/learning-data-science-ufsm" }
+  skin: auto
