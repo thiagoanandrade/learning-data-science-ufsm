@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<div id="container"></div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Data Science UFSM</title>
-</head>
-
-<body>
-    <div id="container"></div>
-</body>
 <script>
     const repo = "repos/luabagg/learning-data-science-ufsm"
     const baseFolder = "docs"
@@ -54,7 +44,7 @@
                 listMap[folder] = []
             }
             listMap[folder].push(
-                `<li><a href="${item.path}">${name}</a></li>`
+                `<li><a href="${path}/${item.path}">${name}</a></li>`
             )
         }
 
@@ -160,5 +150,3 @@
         document.getElementById("container").innerHTML = htmlString;
     })()
 </script>
-
-</html>
