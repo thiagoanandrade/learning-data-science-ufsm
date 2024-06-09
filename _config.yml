@@ -10,6 +10,6 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 minima:
- skin: auto
-social_links:
-  - { platform: github, user_url: "https://github.com/luabagg/learning-data-science-ufsm" }
+  skin: solarized
+  social_links:
+    - { platform: github, user_url: "https://github.com/luabagg/learning-data-science-ufsm" }
