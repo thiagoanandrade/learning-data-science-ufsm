@@ -2,6 +2,7 @@ remote_theme: jekyll/minima
 author:
   name: luabagg
   email: luanbaggio0@gmail.com
+github_username: luabagg
 title: Learning Data Science UFSM
 description: >
   👨‍💻 Website destinado a conter os conteúdos de apoio das aulas de Ciência de Dados da UFSM.

@@ -1,6 +1,24 @@
-<div id="container"></div>
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
-<script>
+  {%- include head.html -%}
+
+  <body>
+
+    {%- include header.html -%}
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+          {{ content }}
+          <div id="container"></div>
+      </div>
+    </main>
+
+    {%- include footer.html -%}
+
+  </body>
+
+  <script>
     const repo = "repos/luabagg/learning-data-science-ufsm"
     const baseFolder = "docs"
     const baseTreeURL = `https://api.github.com/${repo}/git/trees`
@@ -150,3 +168,5 @@
         document.getElementById("container").innerHTML = htmlString;
     })()
 </script>
+
+</html>
