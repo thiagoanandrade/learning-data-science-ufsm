@@ -118,7 +118,6 @@
         return htmlString
     }
 
-
     // Initializes the requests to GitHub's API.
     (async () => {
         const response = await fetch(`https://api.github.com/${repo}/contents/${baseFolder}`);
@@ -161,4 +160,5 @@
         document.getElementById("container").innerHTML = htmlString;
     })()
 </script>
+
 </html>
