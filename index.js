@@ -24,7 +24,7 @@ function createListMap(basePath, treeData) {
     let listMap = {}
     listMap[baseFolderIndex] = []
 
-    for (let item of treeData) {
+    for (let [key, item] of Object.entries(treeData)) {
         const itemPaths = item.path.split("/")
         const lastIndexSplit = splitLastIndex(item.path, "/")
 
@@ -32,6 +32,8 @@ function createListMap(basePath, treeData) {
         if (lastIndexSplit.length != 2 || basePath != lastIndexSplit[0]) {
             continue
         }
+
+        delete treeData[key]
 
         if (item.type == "tree") {
             const folderName = itemPaths.slice(-1).pop()
@@ -106,6 +108,7 @@ async function buildHtml(dirs) {
             return getNoContentText()
         }
 
+        // Standardizes each node's path to represent the full path
         const fmtTree = treeData.tree.map(function(node) {
             node.path = `${subFolder.path}/${node.path}`
             return node
