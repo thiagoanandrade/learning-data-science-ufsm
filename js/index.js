@@ -81,7 +81,7 @@ function createListMap(basePath, treeData) {
 
 // Creates a return button.
 function getReturnButton() {
-    return `<a href="./" style="text-align:right">Voltar</a>`
+    return `<a href="./" style="float:right;">Voltar</a>`
 }
 
 // Formats the tag according to the folder's depth.
@@ -98,12 +98,12 @@ function getTitleTag(title, depth) {
 function getContentRecursively(listMap, depth) {
     let htmlString = ""
     for (let [title, list] of Object.entries(listMap)) {
-        if (title) {
-            htmlString += getTitleTag(title, depth + 1)
-        }
-
         if (depth == 0) {
             htmlString += getReturnButton()
+        }
+
+        if (title) {
+            htmlString += getTitleTag(title, depth + 1)
         }
 
         let content = ""
