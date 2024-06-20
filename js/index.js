@@ -104,24 +104,22 @@ function getContentRecursively(listMap, depth) {
             htmlString += getTitleTag(title, depth + 1)
         }
 
-        returnButton = ""
         if (depth == 0) {
-            returnButton = getReturnButton()
+            htmlString += getReturnButton()
         }
 
         let content = ""
         if (Array.isArray(list) && title == contentIndex) {
-            // If it's
-            content += "<ul>" + list.join("\n") + "</ul>";
+            if (list.length > 0) {
+                content += "<ul>" + list.join("\n") + "</ul>";
+            }
         } else if (typeof list === "object") {
             content += getContentRecursively(list, depth + 1)
+        } else {
+            content = getNoContentText()
         }
 
-        if (!content) {
-            htmlString += getNoContentText()
-        } else {
-            htmlString += content
-        }
+        htmlString += content
     }
 
     return htmlString
