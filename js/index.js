@@ -81,9 +81,7 @@ function createListMap(basePath, treeData) {
 
 // Creates a return button.
 function getReturnButton() {
-    return `<span align="right">
-        <button name="return" onclick="./">Voltar</button>
-    </span>`
+    return `<a href="./" style="text-align:right">Voltar</a>`
 }
 
 // Formats the tag according to the folder's depth.
