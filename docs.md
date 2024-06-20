@@ -1,1 +1,1 @@
-{% include content.html %}
+{% include class-content.html %}
