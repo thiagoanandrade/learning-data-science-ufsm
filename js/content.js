@@ -1,7 +1,8 @@
 const repo = "repos/luabagg/learning-data-science-ufsm"
-const baseFolder = "docs"
 const baseTreeURL = `https://api.github.com/${repo}/git/trees`
-const baseFolderIndex = ""
+
+// The index used to store the folder content. Other values will be read as folder names.
+const contentIndex = ""
 
 // Returns default text for no content.
 function getNoContentText() {
@@ -22,7 +23,7 @@ function splitLastIndex(item, separator) {
 // Creates a map of the folder and its files -> { folder1: {folder2...}, "": [my files...]}.
 function createListMap(basePath, treeData) {
     let listMap = {}
-    listMap[baseFolderIndex] = []
+    listMap[contentIndex] = []
 
     for (let [key, item] of Object.entries(treeData)) {
         const itemPaths = item.path.split("/")
@@ -46,7 +47,7 @@ function createListMap(basePath, treeData) {
         }
 
         // Adds the list item to the map
-        listMap[baseFolderIndex].push(
+        listMap[contentIndex].push(
             `<li><a href="${item.path}">${lastIndexSplit[1]}</a></li>`
         )
     }
@@ -65,7 +66,7 @@ function getTitleTag(title, depth) {
 }
 
 // Go through each folder recursively, then, appends the html in order.
-function writeListRecursively(listMap, depth) {
+function getContentRecursively(listMap, depth) {
     let htmlString = ""
     for (let [title, list] of Object.entries(listMap)) {
         if (title) {
@@ -73,10 +74,11 @@ function writeListRecursively(listMap, depth) {
         }
 
         let content = ""
-        if (Array.isArray(list) && title == baseFolderIndex) {
+        if (Array.isArray(list) && title == contentIndex) {
+            // If it's
             content += "<ul>" + list.join("\n") + "</ul>";
         } else if (typeof list === "object") {
-            content += writeListRecursively(list, depth + 1)
+            content += getContentRecursively(list, depth + 1)
         }
 
         if (!content) {
@@ -89,50 +91,43 @@ function writeListRecursively(listMap, depth) {
     return htmlString
 }
 
-// Traverses the subFolders starting by the base folder (defined as "").
-// Then appends the html of each subfolder.
-async function buildHtml(dirs) {
-    let listMap = {}
+// Traverses the folder recursively, then appends the content of each subfolder.
+// The folder must be inside ./docs and the folder path and folder sha must be correct.
+async function buildContent(folderPath, folderSha) {
     // Get directory info recursively
-    for (let subFolder of dirs) {
-        if (subFolder.type != "dir") {
-            continue
-        }
-
-        const treeResponse = await fetch(`${baseTreeURL}/${subFolder.sha}?recursive=1`);
-        if (treeResponse.status != 200) {
-            return getNoContentText()
-        }
-        const treeData = await treeResponse.json();
-        if (!treeData.tree) {
-            return getNoContentText()
-        }
-
-        // Standardizes each node's path to represent the full path
-        const fmtTree = treeData.tree.map(function(node) {
-            node.path = `${subFolder.path}/${node.path}`
-            return node
-        })
-
-        const folder = splitLastIndex(subFolder.path, "/")
-        if (folder.length != 2) {
-            continue
-        }
-        listMap[folder[1]] = createListMap(subFolder.path, fmtTree)
+    const treeResponse = await fetch(`${baseTreeURL}/${folderSha}?recursive=1`);
+    if (treeResponse.status != 200) {
+        return getNoContentText()
+    }
+    const treeData = await treeResponse.json();
+    if (!treeData.tree) {
+        return getNoContentText()
     }
 
-    return writeListRecursively(listMap, 1) ?? getNoContentText()
+    // Standardizes each node's path to represent the full path
+    const fmtTree = treeData.tree.map(function(node) {
+        node.path = `${folderPath}/${node.path}`
+        return node
+    })
+
+    let listMap = {}
+    listMap[folderPath] = createListMap(folderPath, fmtTree)
+
+    return getContentRecursively(listMap, 0) ?? getNoContentText()
 }
+
 
 // Initializes the requests to GitHub's API.
 (async () => {
-    const response = await fetch(`https://api.github.com/${repo}/contents/${baseFolder}`);
-    if (response.status != 200) {
-        return document.getElementById("container").innerHTML = "<p>API do GitHub não está OK :(</p>";
+    const url = new URL(window.location.href);
+    const folderPath = url.searchParams.get('path');
+    const folderSha = url.searchParams.get('sha');
+
+    content = getNoContentText()
+    if (folderSha) {
+        content = await buildContent(folderPath, folderSha)
     }
 
-    const data = await response.json();
-
     // Iterate through the directories listed in baseFolder and builds the content
-    document.getElementById("container").innerHTML = await buildHtml(data)
+    document.getElementById("class-content").innerHTML = content
 })()
