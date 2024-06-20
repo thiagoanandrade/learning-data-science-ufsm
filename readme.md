@@ -5,4 +5,3 @@
 <p align="left">Aqui você encontrará os mais diversos conteúdos relacionados ao estudo da ciência de dados. Sinta-se à vontade para explorar!</p>
 
 <div id="class-listing"></div>
-<script type="text/javascript" src="./js/index.js"></script>
