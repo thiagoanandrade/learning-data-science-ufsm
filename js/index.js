@@ -44,6 +44,19 @@ function buildClasses(classesData) {
     return classesListing ?? getNoContentText()
 }
 
+// Applies some regex to convert filenames to title.
+function convertFilenameToTitle(filename) {
+    return filename
+        .replace(/\.[^/.]+$/, "")
+        .replace(/[`~^*_|+\='".\{\}\[\]\\\/]/gi, ' ')
+        .replace(
+            /\w\S*/g,
+            function (txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+        )
+}
+
 // Creates a map of the folder and its files -> { folder1: {folder2...}, "": [my files...]}.
 function createListMap(basePath, treeData) {
     let listMap = {}
@@ -70,9 +83,11 @@ function createListMap(basePath, treeData) {
             continue
         }
 
+        const title = convertFilenameToTitle(lastIndexSplit[1])
+
         // Adds the list item to the map
         listMap[contentIndex].push(
-            `<li><a href="${item.path}">${lastIndexSplit[1]}</a></li>`
+            `<li><a href="${item.path}">${title}</a></li>`
         )
     }
 
@@ -85,9 +100,9 @@ function getReturnButton() {
 }
 
 // Formats the tag according to the folder's depth.
-// Uses <p> if tagNumber greater than 4.
+// Uses <p> if tagNumber greater than 5.
 function getTitleTag(title, depth) {
-    if (depth > 4) {
+    if (depth > 5) {
         return `<p><strong>${title}</strong></p>`
     }
 
