@@ -24,8 +24,10 @@ function buildClasses(classesData) {
             continue
         }
 
+        const title = path[1]
+
         classesListing += `<h3>
-            <a href="./${path[0]}/index.html?path=${path[1]}&sha=${classData.sha}">${path[1]}</a>
+            <a href="./${path[0]}?path=${classData.path}&sha=${classData.sha}">${title}</a>
         </h3>`
     }
 
@@ -40,6 +42,7 @@ function buildClasses(classesData) {
     }
 
     const data = await response.json();
+    const sectionTitle = "<h2>Turmas</h2>"
 
-    document.getElementById("class-listing").innerHTML = buildClasses(data)
+    document.getElementById("class-listing").innerHTML = sectionTitle + buildClasses(data)
 })()

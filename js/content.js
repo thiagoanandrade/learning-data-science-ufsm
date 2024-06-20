@@ -110,14 +110,20 @@ async function buildContent(folderPath, folderSha) {
         return node
     })
 
+    const path = splitLastIndex(folderPath, "/")
+    if (path.length != 2) {
+        return getNoContentText()
+    }
+
+    const title = path[1]
+
     let listMap = {}
-    listMap[folderPath] = createListMap(folderPath, fmtTree)
+    listMap[title] = createListMap(folderPath, fmtTree)
 
     return getContentRecursively(listMap, 0) ?? getNoContentText()
 }
 
-
-// Initializes the requests to GitHub's API.
+// Gets the query parameters to generate the content listing.
 (async () => {
     const url = new URL(window.location.href);
     const folderPath = url.searchParams.get('path');
