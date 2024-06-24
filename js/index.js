@@ -92,8 +92,8 @@ async function createListMap(basePath, treeData) {
         // Adds the list item to the map
         listMap[contentIndex].push(
             `<li>
-                <i class="${extIcon}"></i>
                 <a href="${item.path}">${title}</a>
+                <i class="${extIcon}"></i>
             </li>`
         )
     }
