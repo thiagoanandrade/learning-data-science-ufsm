@@ -1,8 +1,8 @@
 remote_theme: jekyll/minima
 author:
-  name: luabagg
-  email: luanbaggio0@gmail.com
-github_username: luabagg
+  name: Thiago A. N. de Andrade
+  github_username: thiagoanandrade
+  email: thiagoan.andrade@gmail.com
 title: Learning Data Science UFSM
 description: >
   👨‍💻 Website destinado a listar os conteúdos de apoio das aulas de Ciência de Dados da UFSM.

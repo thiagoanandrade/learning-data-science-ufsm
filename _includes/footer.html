@@ -17,6 +17,9 @@
             {% if site.author.name -%}
               <li class="p-name">{{ site.author.name | escape }}</li>
             {% endif -%}
+            {% if site.github_username -%}
+              <li class="p-name">{{ site.github_username | escape }}</li>
+            {% endif -%}
             {% if site.author.email -%}
               <li><a class="u-email" href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></li>
             {%- endif %}
@@ -30,6 +33,10 @@
   
       <div class="social-links">
         {%- include social.html -%}
+      </div>
+
+      <div>
+        <p class="p-name">created by @luabagg</p>
       </div>
   
     </div>

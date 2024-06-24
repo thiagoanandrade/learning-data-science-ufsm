@@ -2,6 +2,9 @@ const repo = "repos/luabagg/learning-data-science-ufsm"
 const baseTreeURL = `https://api.github.com/${repo}/git/trees`
 const baseFolder = "docs"
 
+// Loads the file extension icons library.
+const icons = require('file-icons-js')
+
 // The index used to store the folder content. Other values will be read as folder names.
 const contentIndex = ""
 
@@ -58,7 +61,7 @@ function convertFilenameToTitle(filename) {
 }
 
 // Creates a map of the folder and its files -> { folder1: {folder2...}, "": [my files...]}.
-function createListMap(basePath, treeData) {
+async function createListMap(basePath, treeData) {
     let listMap = {}
     listMap[contentIndex] = []
 
@@ -75,7 +78,7 @@ function createListMap(basePath, treeData) {
 
         if (item.type == "tree") {
             const folderName = itemPaths.slice(-1).pop()
-            listMap[folderName] = createListMap(item.path, treeData)
+            listMap[folderName] = await createListMap(item.path, treeData)
             continue
         }
 
@@ -84,10 +87,14 @@ function createListMap(basePath, treeData) {
         }
 
         const title = convertFilenameToTitle(lastIndexSplit[1])
+        const extIcon = await icons.getClass(lastIndexSplit[1])
 
         // Adds the list item to the map
         listMap[contentIndex].push(
-            `<li><a href="${item.path}">${title}</a></li>`
+            `<li>
+                <i class="${extIcon}"></i>
+                <a href="${item.path}">${title}</a>
+            </li>`
         )
     }
 
@@ -167,7 +174,7 @@ async function buildContent(folderPath, folderSha) {
     const title = path[1]
 
     let listMap = {}
-    listMap[title] = createListMap(folderPath, fmtTree)
+    listMap[title] = await createListMap(folderPath, fmtTree)
 
     return getContentRecursively(listMap, 0) ?? getNoContentText()
 }
