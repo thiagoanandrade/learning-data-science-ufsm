@@ -1,4 +1,4 @@
-const repo = "repos/luabagg/learning-data-science-ufsm"
+const repo = "repos/thiagoanandrade/learning-data-science-ufsm"
 const baseTreeURL = `https://api.github.com/${repo}/git/trees`
 const baseFolder = "docs"
 
