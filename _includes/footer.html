@@ -15,10 +15,12 @@
         {%- if site.author %}
           <ul class="contact-list">
             {% if site.author.name -%}
-              <li class="p-name">{{ site.author.name | escape }}</li>
-            {% endif -%}
-            {% if site.author.github_username -%}
-              <li class="p-name">{{ site.author.github_username | escape }}</li>
+              <li class="p-name">
+                {{ site.author.name | escape }}
+                {% if site.author.github_username -%}
+                  {{ "-" | site.author.github_username }}
+                {% endif -%}
+              </li>
             {% endif -%}
             {% if site.author.email -%}
               <li><a class="u-email" href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></li>
@@ -28,14 +30,16 @@
         </div>
         <div class="footer-col">
           <p>{{ site.description | escape }}</p>
-          <p class="p-name">created by @luabagg</p>
         </div>
       </div>
   
       <div class="social-links">
         {%- include social.html -%}
+        <ul class="social-media-list" style="opacity: 0.5;">
+          <li>created by @luabagg</li>
+        </ul>
       </div>
-  
+
     </div>
   
   </footer>
