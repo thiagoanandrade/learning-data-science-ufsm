@@ -131,11 +131,14 @@ function getContentRecursively(listMap, depth) {
             htmlString += getTitleTag(title, depth + 1)
         }
 
+        const listItemsCondition = title == contentIndex && Array.isArray(list) && list.length > 0
+        if (listItemsCondition) {
+            htmlString += `<details><summary><i class="bi bi-folder2"></i>&emsp;abrir</summary>`;
+        }
+
         let content = ""
-        if (Array.isArray(list) && title == contentIndex) {
-            if (list.length > 0) {
-                content += "<ul>" + list.join("\n") + "</ul>";
-            }
+        if (listItemsCondition) {
+            content += "<ul>" + list.join("\n") + "</ul>";
         } else if (typeof list === "object") {
             content += getContentRecursively(list, depth + 1)
         } else {
@@ -143,6 +146,9 @@ function getContentRecursively(listMap, depth) {
         }
 
         htmlString += content
+        if (listItemsCondition) {
+            htmlString += "</details>";
+        }
     }
 
     return htmlString
