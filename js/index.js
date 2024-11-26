@@ -60,10 +60,21 @@ function convertFilenameToTitle(filename) {
         )
 }
 
+// Checks if the file extension is HTML.
+function checkIsHtmlFile(item) {
+    return item.path.endsWith(".html") || item.path.endsWith(".htm")
+}
+
 // Creates a map of the folder and its files -> { folder1: {folder2...}, "": [my files...]}.
-async function createListMap(basePath, treeData) {
+async function createListMap(basePath, treeData, hasHtmlFile = false) {
     let listMap = {}
     listMap[contentIndex] = []
+
+    if (hasHtmlFile) {
+        treeData = treeData.filter(item => {
+            return checkIsHtmlFile(item)
+        });
+    }
 
     for (let [key, item] of Object.entries(treeData)) {
         const itemPaths = item.path.split("/")
@@ -81,7 +92,10 @@ async function createListMap(basePath, treeData) {
             if (folderName == contentIndex) {
                 continue
             }
-            listMap[folderName] = await createListMap(item.path, treeData)
+            const hasAnyHtmlFile = treeData.some(item => {
+                return checkIsHtmlFile(item);
+            })
+            listMap[folderName] = await createListMap(item.path, treeData, hasAnyHtmlFile)
             continue
         }
 
@@ -132,7 +146,7 @@ function getContentRecursively(listMap, depth) {
         }
 
         const listItemsCondition = title == contentIndex && Array.isArray(list) && list.length > 0
-        if (listItemsCondition) {
+        if (listItemsCondition && list.length > 1) {
             htmlString += `<details><summary><i class="bi bi-folder2"></i></summary>`;
         }
 
@@ -146,7 +160,7 @@ function getContentRecursively(listMap, depth) {
         }
 
         htmlString += content
-        if (listItemsCondition) {
+        if (listItemsCondition && list.length > 1) {
             htmlString += "</details>";
         }
     }
