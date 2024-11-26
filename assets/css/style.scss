@@ -7,13 +7,11 @@
   "minima/initialize";
 
 details {
-  font: 16px "Open Sans", Calibri, sans-serif;
   width: 620px;
-  margin-bottom: 1em;
   border: 1px solid #555;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #2c2c2c; /* Updated to a darker shade */
+  background-color: #2c2c2c;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
 }
@@ -28,7 +26,7 @@ details > summary {
   font-weight: bold;
   list-style: none;
   position: relative;
-  color: #ddd; /* Light text color */
+  color: #ddd;
 }
 details > summary::after {
   content: "\25B6"; /* Right arrow */
@@ -43,12 +41,13 @@ details[open] > summary::after {
 details > summary::-webkit-details-marker {
   display: none;
 }
-details > p {
-  padding: 10px 15px;
-  background-color: #333;
-  margin: 0;
-  color: #ddd; /* Light text for dark mode */
-}
 details[open] > summary {
   background-color: #555; /* Slightly lighter background */
+  margin-bottom: 1em;
+}
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+  details {
+    width: 100%; /* Full width on small screens */
+  }
 }

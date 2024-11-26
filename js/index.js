@@ -133,7 +133,7 @@ function getContentRecursively(listMap, depth) {
 
         const listItemsCondition = title == contentIndex && Array.isArray(list) && list.length > 0
         if (listItemsCondition) {
-            htmlString += `<details><summary><i class="bi bi-folder2"></i>&emsp;abrir</summary>`;
+            htmlString += `<details><summary><i class="bi bi-folder2"></i></summary>`;
         }
 
         let content = ""
