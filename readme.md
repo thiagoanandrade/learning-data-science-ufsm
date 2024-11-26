@@ -1,4 +1,4 @@
-<h1>Bem vindos ao Estudando Data Science na UFSM 😼</h1>
+<h1>Bem-vindo ao Estudando Data Science na UFSM 😼</h1>
 
 <img src="./images/data-science.jpg" align="right" width="50%" alt="data-science"/>
 
