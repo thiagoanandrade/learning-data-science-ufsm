@@ -1,1 +1,1 @@
-<div id="class-content"></div>
+<div id="class-content">Carregando...</div>

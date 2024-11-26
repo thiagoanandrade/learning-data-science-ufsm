@@ -6,7 +6,7 @@ const baseFolder = "docs"
 const icons = require('file-icons-js')
 
 // The index used to store the folder content. Other values will be read as folder names.
-const contentIndex = ""
+const contentIndex = "contentItemsList"
 
 // Returns default text for no content.
 function getNoContentText() {
@@ -44,7 +44,7 @@ function buildClasses(classesData) {
         </h3>`
     }
 
-    return classesListing ?? getNoContentText()
+    return classesListing ?? "<p>Nenhuma turma encontrada.</p>"
 }
 
 // Applies some regex to convert filenames to title.
@@ -78,6 +78,9 @@ async function createListMap(basePath, treeData) {
 
         if (item.type == "tree") {
             const folderName = itemPaths.slice(-1).pop()
+            if (folderName == contentIndex) {
+                continue
+            }
             listMap[folderName] = await createListMap(item.path, treeData)
             continue
         }
@@ -87,13 +90,13 @@ async function createListMap(basePath, treeData) {
         }
 
         const title = convertFilenameToTitle(lastIndexSplit[1])
-        const extIcon = await icons.getClass(lastIndexSplit[1])
+        const extensionIcon = await icons.getClass(lastIndexSplit[1])
 
         // Adds the list item to the map
         listMap[contentIndex].push(
             `<li>
                 <a href="${item.path}">${title}</a>
-                <i class="${extIcon}"></i>
+                <i class="${extensionIcon}"></i>
             </li>`
         )
     }
@@ -124,7 +127,7 @@ function getContentRecursively(listMap, depth) {
             htmlString += getReturnButton()
         }
 
-        if (title) {
+        if (title && title != contentIndex) {
             htmlString += getTitleTag(title, depth + 1)
         }
 
@@ -161,7 +164,7 @@ async function buildContent(folderPath, folderSha) {
     }
 
     // Standardizes each node's path to represent the full path
-    const fmtTree = treeData.tree.map(function(node) {
+    treeData.tree.map(function (node) {
         node.path = `${folderPath}/${node.path}`
         return node
     })
@@ -174,7 +177,7 @@ async function buildContent(folderPath, folderSha) {
     const title = path[1]
 
     let listMap = {}
-    listMap[title] = await createListMap(folderPath, fmtTree)
+    listMap[title] = await createListMap(folderPath, treeData.tree)
 
     return getContentRecursively(listMap, 0) ?? getNoContentText()
 }
