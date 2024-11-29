@@ -11,3 +11,6 @@ plugins:
   - jekyll-seo-tag
 minima:
   skin: auto
+exclude:
+  - "**/*.Rmd"
+  - "**/*.rmd"
