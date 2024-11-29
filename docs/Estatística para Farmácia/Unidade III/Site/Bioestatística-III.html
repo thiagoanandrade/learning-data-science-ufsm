@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Estatística para Farmácia   Unidade III   Amostragem</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Prof. Thiago A. N. De Andrade" />
+    <meta name="date" content="2024-11-12" />
+    <script src="Bioestatística-III_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Estatística para Farmácia <br/> Unidade III <br/> Amostragem
+]
+.author[
+### Prof. Thiago A. N. De Andrade
+]
+.institute[
+### Universidade Federal de Santa Maria <br/> Departamento de Estatística
+]
+.date[
+### 2024-11-12
+]
+
+---
+
+
+
+
+
+
+###  Aviso aos estudantes
+
+&lt;style type="text/css"&gt;
+
+body {
+  text-align: justify;
+}
+
+&lt;/style&gt;
+
+
+&lt;style type="text/css"&gt;
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+&lt;/style&gt;
+
+
+&gt; - Este é um material novo e atualizado, elaborado especialmente para nosso curso **Estatística para Farmácia - UFSM 2024.2**. Entretanto, **não se configura em conteúdo original**. É apenas uma compilação resumida de conteúdos presentes nas referências citadas. Em resumo: é indispensável consultar as referências indicadas.
+
+&gt; - As imagens não são autorais e os respectivos créditos são reservados aos autores.
+
+
+&gt; - Este material foi integralmente produzido em  `R Markdown`, utilizando o pacote `xaringan`, que possibilita a criação de apresentações **ninja**.
+
+
+
+---
+
+class: middle, center, inverse
+
+# UNIDADE 3 - AMOSTRAGEM
+
+---
+
+class: middle
+
+#### 3.1 - Definição de Amostragem Probabilística
+
+A amostragem probabilística é uma técnica de seleção de uma amostra em que cada membro da população tem uma probabilidade conhecida e não nula de ser selecionado. Isso assegura que a amostra seja representativa da população, permitindo a generalização dos resultados obtidos para a população inteira.
+
+---
+
+class: middle
+
+#### Exemplos no contexto de Farmácia
+
+1. **Estudo de Eficácia de Medicamento**: Selecionar aleatoriamente pacientes de um hospital para testar a eficácia de um novo medicamento.
+
+2. **Pesquisa de Satisfação**: Avaliar a satisfação dos clientes de uma farmácia com base em uma amostra aleatória de atendimentos realizados.
+
+---
+
+class: middle
+
+#### 3.2 - Técnicas de Seleção da Amostra
+
+Existem diversas técnicas de amostragem probabilística, cada uma com suas particularidades e aplicações adequadas.
+
+---
+
+class: middle
+
+#### 3.2.1 - Amostragem Aleatória Simples
+
+Nesta técnica, cada membro da população tem a mesma chance de ser incluído na amostra. Pode ser realizada através de sorteio ou utilizando tabelas de números aleatórios.
+
+**Exemplo**: Suponha que temos uma lista de 1000 pacientes e queremos selecionar uma amostra de 100 para avaliar a resposta a um novo tratamento. Utilizamos um software de randomização para escolher 100 pacientes aleatoriamente.
+
+
+---
+
+class: middle
+
+#### 3.2.2 - Amostragem Sistemática
+
+Na amostragem sistemática, selecionamos os elementos da população em intervalos regulares. É necessário um ponto de partida aleatório e, a partir dele, selecionamos cada k-ésimo elemento.
+
+**Exemplo**: Se quisermos selecionar 100 pacientes de uma lista de 1000, escolhemos um ponto de partida aleatório entre 1 e 10, digamos 7. A partir daí, selecionamos cada 10º paciente (7, 17, 27, ...).
+
+
+
+---
+class: middle
+
+
+#### 3.2.3 - Amostragem Estratificada
+
+Na amostragem estratificada, a população é dividida em subgrupos (estratos) mutuamente exclusivos que compartilham características semelhantes. Uma amostra aleatória é então extraída de cada estrato proporcionalmente ao seu tamanho na população.
+
+**Exemplo**: Suponha que queremos estudar a eficácia de um medicamento em diferentes faixas etárias. Dividimos a população em estratos como jovens `\(18-35\)`, adultos `\(36-55\)` e idosos `\(56+\)`. Selecionamos aleatoriamente pacientes de cada faixa etária proporcionalmente ao seu número na população total.
+
+
+---
+class: middle
+
+#### 3.2.4 - Amostragem por Conglomerado
+
+Na amostragem por conglomerado, a população é dividida em grupos ou conglomerados (por exemplo, bairros, escolas, hospitais), e alguns desses conglomerados são selecionados aleatoriamente. Todos os membros dos conglomerados selecionados são incluídos na amostra.
+
+**Exemplo**: Se quisermos estudar a saúde dos funcionários de uma rede de farmácias, podemos dividir a população em conglomerados baseados nas filiais. Selecionamos aleatoriamente algumas filiais e incluímos todos os funcionários dessas filiais na amostra.
+
+
+---
+
+class: middle
+
+#### 3.3 - Distribuição Amostral da Média e da Proporção
+
+#### Distribuição Amostral da Média
+
+A distribuição amostral da média é a distribuição das médias das amostras de um determinado tamanho `\(n\)` extraídas da população. Esta distribuição se aproxima de uma distribuição normal conforme o tamanho da amostra aumenta, devido ao Teorema Central do Limite.
+
+---
+
+class: middle
+
+$$
+\bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right)
+$$
+
+em que `\(\mu\)` é a média populacional e `\(\sigma^2\)` é a variância populacional.
+
+---
+
+class: middle
+
+#### Distribuição Amostral da Proporção
+
+A distribuição amostral da proporção é a distribuição das proporções amostrais `\(p\)` de um determinado tamanho `\(n\)`. Para grandes amostras, esta distribuição também se aproxima de uma distribuição normal.
+
+$$
+\hat{P} \sim N\left(P, \frac{P(1-P)}{n}\right)
+$$
+
+em que `\(P\)` é a proporção populacional.
+
+---
+
+class: middle
+
+#### 3.4 - Determinação do Tamanho da Amostra
+
+Para estimar a média e a proporção de uma população
+
+---
+
+class: middle
+
+#### Para Estimar a Média
+
+Para determinar o tamanho da amostra necessário para estimar a média com uma margem de erro `\(E\)` e um nível de confiança `\(1-\alpha\)`:
+
+$$
+n = \left(\frac{Z_{\alpha/2} \cdot \sigma}{E}\right)^2
+$$
+
+em que `\(Z_{\alpha/2}\)` é o valor crítico da distribuição normal correspondente ao nível de confiança desejado.
+
+---
+
+class: middle
+
+#### Para Estimar a Proporção
+
+Para determinar o tamanho da amostra necessário para estimar uma proporção com uma margem de erro `\(E\)` e um nível de confiança `\(1-\alpha\)`:
+
+$$
+n = \frac{Z_{\alpha/2}^2 \cdot P(1-P)}{E^2}
+$$
+
+em que `\(P\)` é a proporção estimada da população.
+
+---
+
+class: middle
+
+#### Exercícios
+
+#### Exercício 1
+
+Um pesquisador deseja estimar a média de pressão arterial sistólica de uma população de pacientes hipertensos. Ele deseja que a estimativa esteja dentro de 5 mmHg da média real, com um nível de confiança de 95%. A variância da pressão arterial na população é conhecida e é 400 (mmHg)$^2$. Qual o tamanho mínimo da amostra que o pesquisador deve utilizar?
+
+---
+
+class: middle
+
+
+#### Solução do Exercício 1
+
+Dado:
+- Margem de erro, `\(E = 5mmHg\)`
+
+- Nível de confiança, `\(1-\alpha = 95\%\)` (portanto, `\(Z_{\alpha/2} = 1.96\)`)
+
+- Variância, `\(\sigma^2 = 400\)`
+
+---
+class: middle
+
+Aplicando a fórmula:
+
+$$
+n = \left(\frac{1.96 \cdot \sqrt{400}}{5}\right)^2 = \left(\frac{1.96 \cdot 20}{5}\right)^2 = \left(\frac{39.2}{5}\right)^2 \approx 61.47
+$$
+
+Portanto, o tamanho mínimo da amostra é 62.
+
+---
+class: middle
+
+#### Exercício 2
+
+Uma farmácia deseja saber a proporção de seus clientes que estão satisfeitos com o serviço oferecido. Eles querem que a estimativa esteja dentro de 4% da proporção real, com um nível de confiança de 95%. Qual deve ser o tamanho mínimo da amostra se a proporção estimada é de 50%?
+
+---
+class: middle
+
+#### Solução do Exercício 2
+
+Dado:
+
+- Margem de erro, `\(E = 0.04\)`
+
+- Nível de confiança, `\(1-\alpha = 95\%\)` (portanto, `\(Z_{\alpha/2} = 1.96\)`)
+
+- Proporção estimada, `\(P = 0.50\)`
+
+---
+class: middle
+
+
+Aplicando a fórmula:
+
+$$
+n = \frac{(1.96)^2 \cdot 0.5 \cdot (1-0.5)}{(0.04)^2} = \frac{3.8416 \cdot 0.25}{0.0016} = \frac{0.9604}{0.0016} \approx 600.25
+$$
+
+Portanto, o tamanho mínimo da amostra é 601.
+
+
+
+
+---
+class: middle
+
+## Tabelas de Distribuição Normal
+
+| Margem de Erro (%) | Nível de Confiança (%) | Valor Z  |
+|--------------------|------------------------|----------|
+| 1%                 | 99%                    | 2.58    |
+| 5%                 | 95%                    | 1.96    |
+| 10%                | 90%                    | 1.64    |
+
+
+
+---
+class: middle
+
+### Referências
+
+
+
+- [**Conceitos e análises estatísticas com R e JASP**](https://bookdown.org/luisfca/docs/)
+
+- [**Regression Modelling for Biostatistics**](https://bookdown.org/stephane_heritier/RM1TEST/)
+
+
+- [**Amostragem: Teoria e prática usando o `R`**](https://amostragemcomr.github.io/livro/index.html)
+
+- [** `R` para Cientistas Sociais **](http://www.uesc.br/editora/livrosdigitais_20140513/r_cientistas.pdf)
+
+
+---
+
+class:  center, middle
+
+Não deixe de entrar em contato comigo para tirar suas dúvidas: &lt;thiagoan.andrade@gmail.com&gt;
+
+
+# Obrigado!
+
+# Thanks!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Estatística para Farmácia   Unidade II   Introdução à Probabilidade</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Prof. Thiago A. N. De Andrade" />
+    <meta name="date" content="2024-11-29" />
+    <script src="Bioestatística-II_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Estatística para Farmácia <br/> Unidade II <br/> Introdução à Probabilidade
+]
+.author[
+### Prof. Thiago A. N. De Andrade
+]
+.institute[
+### Universidade Federal de Santa Maria <br/> Departamento de Estatística
+]
+.date[
+### 2024-11-29
+]
+
+---
+
+
+
+
+
+
+###  Aviso aos estudantes
+
+&lt;style type="text/css"&gt;
+
+body {
+  text-align: justify;
+}
+
+&lt;/style&gt;
+
+
+&lt;style type="text/css"&gt;
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+&lt;/style&gt;
+
+
+&gt; - Este é um material novo e atualizado, elaborado especialmente para nosso curso **Estatística para Farmácia - UFSM 2024.2**. Entretanto, **não se configura em conteúdo original**. É apenas uma compilação resumida de conteúdos presentes nas referências citadas. Em resumo: é indispensável consultar as referências indicadas.
+
+&gt; - As imagens não são autorais e os respectivos créditos são reservados aos autores.
+
+
+&gt; - Este material foi integralmente produzido em  `R Markdown`, utilizando o pacote `xaringan`, que possibilita a criação de apresentações **ninja**.
+
+---
+
+class: middle
+
+# Introdução à Probabilidade
+
+---
+class: middle
+
+### 1.Abordagem Subjetiva 🎲
+
+A probabilidade subjetiva é uma medida baseada na experiência ou opinião pessoal. Por exemplo, um farmacêutico pode avaliar, com base em sua experiência, que há uma alta probabilidade (70%) de um paciente idoso não aderir corretamente a um regime de múltiplos medicamentos, levando em conta fatores como complexidade do regime, histórico de esquecimentos e instruções fornecidas.
+
+---
+
+class: middle
+
+### 2.Abordagem Frequentista 🎲🎲
+
+Na abordagem frequentista, a probabilidade é determinada pela frequência de ocorrência de um evento em um grande número de tentativas. Por exemplo, se um estudo clínico mostrou que, em 1000 pacientes que tomaram um determinado medicamento, 300 desenvolveram um efeito colateral específico, então a probabilidade de um novo paciente desenvolver o mesmo efeito colateral seria calculada como `\(P = \frac{300}{1000} = 0.3\)` ou 30%.
+
+---
+class: middle
+
+###  3.Abordagem Clássica 🎲🎲🎲
+
+Na abordagem clássica, a probabilidade é calculada assumindo que todos os eventos possíveis são igualmente prováveis. Por exemplo, ao analisar o risco de um determinado polimorfismo genético afetar a metabolização de um medicamento, se existem 3 alelos possíveis e um é conhecido por causar a metabolização lenta, a probabilidade clássica de encontrar um paciente com esse alelo específico em uma população aleatória seria de `\(\frac{1}{3}\)` (assumindo que todos são igualmente comuns).
+
+---
+class: middle
+
+
+### 4.Abordagem de Kolmogorov 🎲🎲🎲🎲
+
+Na abordagem axiomática de Kolmogorov, a probabilidade é definida por um conjunto de axiomas matemáticos. Por exemplo, para o cálculo de risco de interação medicamentosa entre dois fármacos A e B, onde as probabilidades são independentes, podemos definir que a probabilidade de ambos ocorrerem simultaneamente é dada por `\(P(A \cap B) = P(A) \cdot P(B)\)`. Essa abordagem permite lidar com probabilidades complexas de forma rigorosa.
+
+---
+class: middle
+
+### Atenção ‼️🐍
+
+Probabilidade é SEMPRE positiva, e definida no intervalo [0,1]. Não obstante, é comum expressá-la em porcentagens.
+
+---
+class: middle
+
+A **probabilidade** é sempre **positiva** e está **definida no intervalo [0,1]**. Isso significa que a probabilidade de um evento nunca pode ser menor que zero nem maior que um. Na prática:
+
+--
+- **0** representa a impossibilidade absoluta do evento ocorrer.
+- **1** representa a certeza absoluta de que o evento ocorrerá.
+
+
+--
+Matematicamente, para qualquer evento `\(A\)`:
+
+$$ 0 \leq P(A) \leq 1 $$
+--
+
+
+A conversão para porcentagem ajuda a comunicar de forma mais intuitiva, especialmente em áreas como Farmácia, onde é comum discutir riscos, eficácia e taxas de ocorrência em termos percentuais.
+
+---
+
+class: middle
+
+### Atenção ‼️🐍
+
+Só faz sentido calcularmos probabilidades quando estamos diante de **fenômenos aleatórios**, ou seja, fenômenos onde o resultado é incerto:
+
+- **Podem ser repetidos**: O fenômeno deve ser repetível, nas mesmas condições, para que possamos observar a variabilidade de seus resultados.
+
+- **Conhecemos o conjunto de resultados possíveis**: Mesmo sem prever um resultado específico, sabemos quais são todos os resultados possíveis (espaço amostral).
+
+- **Lei dos Grandes Números**: À medida que repetimos o experimento um grande número de vezes, a frequência relativa de um evento tende a se aproximar de sua probabilidade teórica.
+
+---
+class: middle
+
+
+
+&lt;img src="download.jfif" width="30%" style="display: block; margin: auto;" /&gt;
+
+[Cena do filme 21 Quebrando a Banca](https://www.youtube.com/watch?v=fwoq2ZzLuQo)
+---
+class: middle
+
+#### Exemplo:  Experimento de Monty Hall 
+--
+
+Imagine que você está em um jogo de TV com **três portas**:🚪🚪🚪
+--
+
+- **Uma porta tem um carro** como prêmio. 🚘
+- **Duas portas têm bodes**. 🐐🐐
+--
+
+#### Regras:
+--
+
+1. Você escolhe uma porta.
+--
+
+2. O apresentador, que **sabe onde está o carro**, **abre uma das outras duas portas**, revelando um bode.
+--
+
+3. Ele lhe oferece a chance de **trocar de porta**.
+--
+
+#### Pergunta: **Você deveria manter sua escolha inicial ou trocar para a outra porta?** Qual estratégia oferece uma maior chance de ganhar o carro?
+
+---
+
+class: middle
+
+#### Experimento de Monty Hall: A Resposta
+
+#### Análise:
+
+1. **Probabilidade Inicial**:
+   - Escolha inicial de uma porta: `\(\frac{1}{3}\)` chance de ter o carro.
+   - Outras duas portas: `\(\frac{2}{3}\)` chance de ter o carro.
+
+2. **O Apresentador Abre uma Porta com um Bode**:
+   - A probabilidade de sua porta original ter o carro **permanece `\(\frac{1}{3}\)`**.
+   - A probabilidade de o carro estar nas outras portas **se concentra na única porta restante: `\(\frac{2}{3}\)`**.
+   
+---
+
+class: middle
+
+#### Conclusão:
+
+**Trocar de porta dobra suas chances de ganhar!** 
+
+- Manter a escolha inicial: `\(\frac{1}{3}\)`.
+- Trocar de porta: `\(\frac{2}{3}\)`.
+
+
+
+
+
+---
+class: middle
+
+# Distribuição Normal
+
+---
+
+class: middle
+
+#### O que é a Distribuição Normal?
+
+A distribuição normal, também conhecida como distribuição de Gauss, é uma distribuição de probabilidade contínua que é simétrica em torno da média. Ela é caracterizada pela famosa curva em forma de sino.
+
+---
+class: middle
+
+#### Características da Distribuição Normal:
+
+- **Simetria**: A curva é simétrica em relação à média.
+
+- **Média, Mediana e Moda**: Na distribuição normal, a média, mediana e moda são iguais.
+
+- **Forma**: A forma da distribuição é determinada pelos parâmetros de média `\(\mu\)` e desvio padrão `\(\sigma\)`.
+
+---
+
+class: middle
+
+#### Função Densidade de Probabilidade
+
+A função densidade de probabilidade (PDF) da distribuição normal é dada por:
+
+
+$$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}} $$
+
+em que:
+
+- `\(\mu\)` = média da distribuição
+
+- `\(\sigma\)` = desvio padrão da distribuição
+
+---
+class: middle
+
+#### A Curva Normal
+
+![Curva Normal](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Standard_deviation_diagram.svg/800px-Standard_deviation_diagram.svg.png)
+
+---
+
+class: middle
+
+#### Propriedades:
+
+- **68-95-99.7 Regra**: Aproximadamente 68% dos dados estão dentro de um desvio padrão da média, 95% dentro de dois desvios padrão e 99.7% dentro de três desvios padrão.
+
+- **Área sob a curva**: A área total sob a curva é igual a 1, representando 100% da probabilidade.
+
+---
+class: middle
+
+#### Aplicações da Distribuição Normal em Farmácia
+
+1.**Controle de Qualidade**: A análise da variabilidade no peso dos comprimidos produzidos em uma fábrica de medicamentos pode ser modelada por uma distribuição normal. Por exemplo, um lote de comprimidos de 500 mg pode ter um desvio padrão de 5 mg. A distribuição normal ajuda a garantir que a maioria dos comprimidos está dentro de uma faixa aceitável.
+
+---
+class: middle
+
+2.**Farmacocinética**: Em estudos de farmacocinética, a distribuição das concentrações de um fármaco no plasma sanguíneo em uma população é frequentemente modelada como uma distribuição normal. Isso é útil para prever como a maioria dos pacientes absorve e elimina o medicamento.
+
+---
+class: middle
+
+3.**Estudos Clínicos**: Ao analisar os resultados de ensaios clínicos, a variabilidade nas respostas dos pacientes ao tratamento pode ser modelada por uma distribuição normal. Por exemplo, o tempo médio de resposta a um analgésico, com um desvio padrão específico, permite prever como diferentes pacientes podem reagir.
+
+---
+class: middle
+
+4.**Determinação de Doses**: Em farmacologia, a resposta de uma população a uma determinada dose de um medicamento é muitas vezes distribuída normalmente. Através da distribuição normal, é possível calcular a dose mais eficaz para a maioria dos pacientes, minimizando efeitos adversos.
+
+
+---
+class: middle
+
+5.**Estabilidade de Medicamentos**: Estudos de estabilidade são realizados para entender como um medicamento se degrada ao longo do tempo. A distribuição normal pode ser usada para modelar a variabilidade dos resultados desses testes, ajudando a prever o prazo de validade.
+
+
+---
+class: middle
+
+6.**Parâmetros Fisiológicos**: Parâmetros fisiológicos importantes, como a pressão arterial, níveis de glicose e frequência cardíaca, tendem a seguir uma distribuição normal em uma população saudável. Isso permite que farmacêuticos identifiquem padrões e desenvolvam medicamentos para ajustes em casos de desvio da normalidade.
+
+
+---
+class: middle
+
+#### Distribuição Normal Padronizada (Z-Score)
+
+#### Definição:
+
+A distribuição normal padronizada tem média 0 e desvio padrão 1. Qualquer distribuição normal pode ser transformada em uma distribuição normal padrão através da fórmula do Z-score:
+
+`$$Z = \frac{X - \mu}{\sigma}$$`
+---
+class: middle
+
+#### Interpretação:
+
+- O Z-score representa o número de desvios padrão que um dado ponto está afastado da média.
+
+- Será muito importante para o cálculo do tamanho amostral conforme veremos a seguir.
+
+---
+class: middle
+
+## Tabelas de Distribuição Normal
+
+| Margem de Erro (%) | Nível de Confiança (%) | Valor Z  |
+|--------------------|------------------------|----------|
+| 1%                 | 99%                    | 2.58    |
+| 5%                 | 95%                    | 1.96    |
+| 10%                | 90%                    | 1.64    |
+
+
+---
+class: middle
+
+&lt;img src="Bioestatística-II_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+
+# Teorema Central do Limite (TCL)
+
+---
+class: middle
+
+#### Teorema Central do Limite (TCL) na Farmácia
+
+O **Teorema Central do Limite (TCL)** nos diz que, para uma amostra suficientemente grande, a **distribuição das médias amostrais** se aproxima de uma **distribuição normal**, independentemente da distribuição original dos dados.
+
+#### Importância:
+
+1. **Estudos de eficácia de medicamentos**: Permite calcular médias e intervalos de confiança para a resposta ao medicamento.
+2. **Controle de Qualidade**: Avaliação do peso médio de comprimidos em lotes.
+3. **Bioequivalência**: Comparação entre dois medicamentos.
+
+---
+
+class: middle
+
+#### Exemplo Prático: Controle de Qualidade
+
+Em uma fábrica de medicamentos, a **distribuição do peso de comprimidos individuais** pode não ser exatamente normal, mas se tirarmos **amostras de tamanho grande** de cada lote e calcularmos a média dessas amostras, a **distribuição das médias amostrais** será aproximadamente **normal**.
+
+#### Aplicação:
+
+1. **Objetivo**: Garantir que o peso médio dos comprimidos de um lote é de 500 mg.
+2. **Amostragem**: Seleciona-se amostras de 30 comprimidos por vez e calcula-se a média.
+3. **TCL**: Com base no TCL, sabemos que as médias amostrais seguem uma distribuição normal, o que permite aplicar testes estatísticos para verificar se o lote está dentro do padrão.
+
+---
+class: middle
+
+#### Detalhando o Conceito do TCL
+
+O ponto-chave do TCL é que, quando repetimos o processo de amostragem várias vezes e calculamos a média de cada amostra:
+
+- A **média dessas médias amostrais** será **igual à média da população** original.
+- O **desvio padrão das médias** (chamado **erro padrão**) é proporcional ao **desvio padrão da população dividido pela raiz quadrada do tamanho da amostra**.
+
+---
+class: middle
+
+Isso é útil para a farmácia, pois mesmo que as características individuais (como peso dos comprimidos ou concentração de princípios ativos) possam não seguir uma distribuição normal, o TCL garante que **as médias** de amostras grandes **seguirão uma distribuição normal**, permitindo análises robustas.
+---
+class: middle
+
+#### Aplicação Farmacêutica do TCL
+
+1. **Farmacocinética**: A concentração de um fármaco no plasma sanguíneo de uma amostra de pacientes pode ter uma distribuição assimétrica. Com base em amostras grandes, o TCL nos permite calcular uma média confiável e intervalos de confiança para prever a resposta esperada da população.
+---
+class: middle
+
+2. **Bioequivalência**: Ao comparar dois medicamentos, o TCL é aplicado para calcular médias amostrais de medidas como a **área sob a curva (AUC)** ou o **tempo de meia-vida**. Mesmo que os dados brutos não sejam normais, o TCL assegura que as médias amostrais sigam uma distribuição normal, permitindo o uso de testes estatísticos padrão.
+
+---
+class: middle
+
+#### Em Conclusão:
+
+O **TCL permite aos farmacêuticos** e pesquisadores tomarem decisões baseadas em médias e proporções de amostras, com maior precisão e confiança, facilitando análises em contextos variados como controle de qualidade, ensaios clínicos e estudos de bioequivalência.
+
+
+---
+class: middle
+
+### Referências
+
+
+
+- [**Conceitos e análises estatísticas com R e JASP**](https://bookdown.org/luisfca/docs/)
+
+- [**Regression Modelling for Biostatistics**](https://bookdown.org/stephane_heritier/RM1TEST/)
+
+
+- [**Amostragem: Teoria e prática usando o `R`**](https://amostragemcomr.github.io/livro/index.html)
+
+- [** `R` para Cientistas Sociais **](http://www.uesc.br/editora/livrosdigitais_20140513/r_cientistas.pdf)
+
+
+---
+
+class:  center, middle
+
+Não deixe de entrar em contato comigo para tirar suas dúvidas: &lt;thiagoan.andrade@gmail.com&gt;
+
+
+# Obrigado!
+
+# Thanks!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
