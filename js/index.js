@@ -1,5 +1,8 @@
-const repo = "repos/thiagoanandrade/learning-data-science-ufsm"
-const baseTreeURL = `https://api.github.com/${repo}/git/trees`
+const repo = "thiagoanandrade/learning-data-science-ufsm"
+const baseTreeURL = `https://api.github.com/repos/${repo}/git/trees`
+const baseContentURL = `https://api.github.com/repos/${repo}/contents`
+const baseRawURL = `https://raw.githubusercontent.com/${repo}/refs/heads/main`
+
 const baseFolder = "docs"
 
 // Loads the file extension icons library.
@@ -14,6 +17,11 @@ const htmlFoderName = "html-content"
 // Returns default text for no content.
 function getNoContentText() {
     return "<p>Lista de conteúdos vazia :(</p>"
+}
+
+// Checks if URL needs to be redirected to raw.
+function redirectToRaw(url) {
+    return url.toLowerCase().endsWith(".rmd") || url.endsWith(".md");
 }
 
 // Split method that only splits the separator's last occurance.
@@ -118,6 +126,13 @@ async function createListMap(basePath, treeData) {
 
         const title = convertFilenameToTitle(lastIndexSplit[1])
         const extensionIcon = await icons.getClass(lastIndexSplit[1])
+        if (lastIndexSplit[1].split(".")[1] == "Rmd") {
+            console.log("item:", item)
+        }
+
+        if (redirectToRaw(item.path)) {
+            item.path = `${baseRawURL}/${item.path}`
+        }
 
         // Adds the list item to the map
         listMap[contentIndex].push(
@@ -219,7 +234,7 @@ async function buildContent(folderPath, folderSha) {
 (async () => {
     const classListing = document.getElementById("class-listing");
     if (classListing) {
-        const response = await fetch(`https://api.github.com/${repo}/contents/${baseFolder}`);
+        const response = await fetch(`${baseContentURL}/${baseFolder}`);
         if (response.status != 200) {
             return classListing.innerHTML = "<p>API do GitHub não está OK :(</p>";
         }
