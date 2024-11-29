@@ -1,0 +1,399 @@
+---
+title: "Estatística para Farmácia <br/> Unidade IV <br/> Estimação"
+author: "Prof. Thiago A. N. De Andrade"
+institute: "Universidade Federal de Santa Maria <br/> Departamento de Estatística"
+date: "`r Sys.Date()`"
+
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+header-includes:
+- \usepackage{tikz}
+- \usepackage{geometry}
+- \usepackage{amsfonts}
+- \usepackage{smartdiagram}
+- \usepackage{metalogo}
+- \usepackage{fancybox}
+- \usepackage{wasysym}
+- \usepackage{mathpazo}
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+options(htmltools.dir.version = FALSE)
+
+knitr::opts_chunk$set(echo=F,
+                      message=F,
+                      warning=F,
+                      fig.align = 'center', 
+                      dpi=200, 
+                      fig.width=9, 
+                      fig.height=4)
+
+library(xaringanthemer)
+
+style_mono_accent(
+  base_color = "#ff843f",
+ header_font_google = google_font("Josefin Sans"),
+ text_font_google   = google_font("Montserrat"),
+  code_font_google   = google_font("Fira Mono")
+)
+
+style_mono_light(base_color = "#ff843f",
+                 base_font_size = "28px")
+
+library(tidyverse)
+
+
+```
+
+
+
+###  Aviso aos estudantes
+
+```{css, echo=FALSE}
+
+body {
+  text-align: justify;
+}
+
+```
+
+
+```{css, echo=FALSE}
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+```
+
+
+> - Este é um material novo e atualizado, elaborado especialmente para nosso curso **Estatística para Farmácia - UFSM 2024.1**. Entretanto, **não se configura em conteúdo original**. É apenas uma compilação resumida de conteúdos presentes nas referências citadas. Em resumo: é indispensável consultar as referências indicadas.
+
+> - As imagens não são autorais e os respectivos créditos são reservados aos autores.
+
+
+> - Este material foi integralmente produzido em  `R Markdown`, utilizando o pacote `xaringan`, que possibilita a criação de apresentações **ninja**.
+
+
+
+
+---
+
+class: middle
+
+# UNIDADE 4 - ESTIMAÇÃO DE PARÂMETROS
+
+---
+
+class: middle
+
+## 4.1 - Introdução
+
+A estimação de parâmetros é uma das principais tarefas da inferência estatística. Envolve o uso de dados amostrais para estimar parâmetros desconhecidos da população, como a média e a proporção. Existem dois tipos principais de estimação: estimação pontual e estimação por intervalo.
+
+---
+
+class: middle
+
+### Estimação Pontual
+
+A estimação pontual utiliza um único valor calculado a partir dos dados amostrais para estimar um parâmetro populacional. Exemplos incluem a média amostral ( $\overline{x}$ ) como estimador da média populacional ( $\mu$ ) e a proporção amostral ( $\hat{p}$ ) como estimador da proporção populacional ( $p$ ).
+
+---
+
+class: middle
+
+### Estimação por Intervalo
+
+A estimação por intervalo fornece um intervalo de valores dentro do qual o parâmetro populacional provavelmente se encontra. É acompanhado por um nível de confiança, que indica a probabilidade de o intervalo conter o parâmetro verdadeiro. Exemplos comuns incluem intervalos de confiança para a média e para a proporção.
+
+---
+
+class: middle
+
+## 4.2 - Estimativa por Intervalo: para Média (com Variância Populacional Conhecida e Desconhecida) e para a Proporção
+
+---
+
+class: middle
+
+### Intervalo de Confiança para a Média (Variância Populacional Conhecida)
+
+Quando a variância populacional ( $\sigma^2$ ) é conhecida, o intervalo de confiança para a média ( $\mu$ ) é dado por:
+
+$$ \overline{x} \pm Z \left( \frac{\sigma}{\sqrt{n}} \right) $$
+
+em que:
+- $\overline{x}$ é a média amostral,
+
+- $Z$ é o valor crítico da distribuição normal correspondente ao nível de confiança desejado,
+
+- $\sigma$ é o desvio padrão populacional,
+
+- $n$ é o tamanho da amostra.
+
+---
+
+class: middle
+
+### Exemplo 1
+
+Um pesquisador deseja estimar a média de uma variável com variância populacional conhecida de 25. A média amostral de uma amostra de 100 observações é 50. Calcule o intervalo de confiança de 95% para a média populacional.
+
+---
+
+class: middle
+
+**Solução:**
+
+Para um nível de confiança de 95%, $Z = 1.96$. A variância populacional $\sigma^2 = 25$ implica que $\sigma = \sqrt{25} = 5$. 
+
+$$ IC = 50 \pm 1.96 \left( \frac{5}{\sqrt{100}} \right) $$
+
+$$ IC = 50 \pm 1.96 \left( 0.5 \right) $$
+
+$$ IC = 50 \pm 0.98 $$
+
+$$ IC = [49.02, 50.98] $$
+
+Portanto, o intervalo de confiança de 95% para a média populacional é [49.02, 50.98].
+
+
+---
+
+class: middle
+
+### Exemplo 2
+
+Uma empresa farmacêutica deseja estimar a média da pressão arterial sistólica de uma população de pacientes. A variância populacional é conhecida e igual a 16. Uma amostra de 64 pacientes apresenta uma média amostral de 120 mmHg. Calcule o intervalo de confiança de 99% para a média populacional.
+
+---
+
+class: middle
+
+**Solução:**
+
+Para um nível de confiança de 99%, $Z = 2.576$. A variância populacional $\sigma^2 = 16$ implica que $\sigma = \sqrt{16} = 4$. 
+
+$$ IC = 120 \pm 2.576 \left( \frac{4}{\sqrt{64}} \right) $$
+
+$$ IC = 120 \pm 2.576 \left( 0.5 \right) $$
+
+$$ IC = 120 \pm 1.288 $$
+
+$$ IC = [118.712, 121.288] $$
+
+Portanto, o intervalo de confiança de 99% para a média populacional é [118.712, 121.288].
+
+
+---
+
+class: middle
+
+### Exemplo 3
+
+Um nutricionista deseja estimar a média do consumo diário de calorias de uma população específica. A variância populacional é conhecida e igual a 49. A média amostral de uma amostra de 81 observações é 2,500 calorias. Calcule o intervalo de confiança de 90% para a média populacional.
+
+---
+
+class: middle
+
+**Solução:**
+
+Para um nível de confiança de 90%, $Z = 1.645$. A variância populacional $\sigma^2 = 49$ implica que $\sigma = \sqrt{49} = 7$. 
+
+$$ IC = 2500 \pm 1.645 \left( \frac{7}{\sqrt{81}} \right) $$
+
+$$ IC = 2500 \pm 1.2795 $$
+
+$$ IC = [2498.7205, 2501.2795] $$
+
+Portanto, o intervalo de confiança de 90% para a média populacional é [2498.7205, 2501.2795].
+
+
+---
+
+class: middle
+
+### Exemplo 4
+
+Um laboratório deseja estimar a média do tempo de dissolução de um novo comprimido. A variância populacional é conhecida e igual a 9. A média amostral de uma amostra de 36 comprimidos é 15 minutos. Calcule o intervalo de confiança de 95% para a média populacional.
+
+---
+
+class: middle
+
+**Solução:**
+
+Para um nível de confiança de 95%, $Z = 1.96$. A variância populacional $\sigma^2 = 9$ implica que $\sigma = \sqrt{9} = 3$. 
+
+$$ IC = 15 \pm 1.96 \left( \frac{3}{\sqrt{36}} \right) $$
+
+$$ IC = 15 \pm 1.96 \left( 0.5 \right) $$
+
+$$ IC = [14.02, 15.98] $$
+
+Portanto, o intervalo de confiança de 95% para a média populacional é [14.02, 15.98].
+
+---
+
+class: middle
+
+### Exemplo 5
+
+Um pesquisador deseja estimar a média da altura de uma população de plantas. A variância populacional é conhecida e igual a 16. A média amostral de uma amostra de 49 plantas é 150 cm. Calcule o intervalo de confiança de 99% para a média populacional.
+
+---
+
+class: middle
+
+**Solução:**
+
+Para um nível de confiança de 99%, $Z = 2.576$. A variância populacional $\sigma^2 = 16$ implica que $\sigma = \sqrt{16} = 4$. 
+
+$$ IC = 150 \pm 2.576 \left( \frac{4}{\sqrt{49}} \right) $$
+
+$$ IC = 150 \pm 2.576 \left( \frac{4}{7} \right) $$
+
+$$ IC = [148.5286, 151.4714] $$
+
+Portanto, o intervalo de confiança de 99% para a média populacional é [148.5286, 151.4714].
+
+---
+
+class: middle
+
+### Exemplo 6
+
+Uma empresa deseja estimar a média da vida útil de um novo tipo de bateria. A variância populacional é conhecida e igual a 49. A média amostral de uma amostra de 64 baterias é 500 horas. Calcule o intervalo de confiança de 90% para a média populacional.
+
+---
+
+class: middle
+
+**Solução:**
+
+Para um nível de confiança de 90%, $Z = 1.645$. A variância populacional $\sigma^2 = 49$ implica que $\sigma = \sqrt{49} = 7$. 
+
+$$ IC = 500 \pm 1.645 \left( \frac{7}{\sqrt{64}} \right) $$
+
+$$ IC = 500 \pm 1.645 \left( \frac{7}{8} \right) $$
+
+$$ IC = [498.561, 501.439] $$
+
+Portanto, o intervalo de confiança de 90% para a média populacional é [498.561, 501.439].
+
+---
+
+class: middle
+
+### Intervalo de Confiança para a Média (Variância Populacional Desconhecida)
+
+Quando a variância populacional ( $\sigma^2$ ) é desconhecida, utilizamos o desvio padrão amostral ( $s$ ) e a distribuição t de Student para calcular o intervalo de confiança:
+
+$$ \overline{x} \pm t \left( \frac{s}{\sqrt{n}} \right) $$
+
+em que:
+- $t$ é o valor crítico da distribuição t de Student com $n-1$ graus de liberdade,
+
+- $s$ é o desvio padrão amostral.
+
+---
+
+class: middle
+
+### Exemplo
+
+Um farmacêutico quer estimar a média da concentração de um ingrediente ativo em um lote de medicamentos. A partir de uma amostra de 25 medicamentos, ele obteve uma média de 30 mg e um desvio padrão de 4 mg. Calcule o intervalo de confiança de 95% para a média populacional.
+
+---
+
+class: middle
+
+**Solução:**
+
+Para um nível de confiança de 95% e 24 graus de liberdade ($n-1 = 24$), o valor crítico $t$ é aproximadamente 2.064.
+
+$$ IC = 30 \pm 2.064 \left( \frac{4}{\sqrt{25}} \right) $$
+
+$$ IC = 30 \pm 2.064 \left( 0.8 \right) $$
+
+$$ IC = 30 \pm 1.6512 $$
+
+$$ IC = [28.35, 31.65] $$
+
+Portanto, o intervalo de confiança de 95% para a média populacional é [28.35, 31.65].
+
+---
+
+class: middle
+
+### Intervalo de Confiança para a Proporção
+
+Para calcular o intervalo de confiança para uma proporção populacional ($p$), utilizamos a proporção amostral ($\hat{p}$) e a distribuição normal:
+
+$$ \hat{p} \pm Z \sqrt{ \frac{\hat{p}(1 - \hat{p})}{n} } $$
+
+em que:
+
+- $\hat{p}$ é a proporção amostral,
+
+- $Z$ é o valor crítico da distribuição normal correspondente ao nível de confiança desejado.
+
+---
+
+class: middle
+
+### Exemplo
+
+Em um estudo sobre a eficácia de uma vacina, 120 de 200 pacientes apresentaram resposta positiva ao tratamento. Calcule o intervalo de confiança de 99% para a proporção populacional de resposta positiva.
+
+---
+
+class: middle
+
+**Solução:**
+
+A proporção amostral $\hat{p} = \frac{120}{200} = 0.6$. Para um nível de confiança de 99%, $Z = 2.576$.
+
+$$ IC = 0.6 \pm 2.576 \sqrt{ \frac{0.6(1 - 0.6)}{200} } $$
+
+$$ IC = 0.6 \pm 2.576 \sqrt{ \frac{0.24}{200} } $$
+
+$$ IC = [0.5108, 0.6892] $$
+
+Portanto, o intervalo de confiança de 99% para a proporção populacional é [0.5108, 0.6892].
+
+---
+class: middle
+
+### Referências
+
+
+
+- [**Conceitos e análises estatísticas com R e JASP**](https://bookdown.org/luisfca/docs/)
+
+- [**Regression Modelling for Biostatistics**](https://bookdown.org/stephane_heritier/RM1TEST/)
+
+
+- [**Amostragem: Teoria e prática usando o `R`**](https://amostragemcomr.github.io/livro/index.html)
+
+- [** `R` para Cientistas Sociais **](http://www.uesc.br/editora/livrosdigitais_20140513/r_cientistas.pdf)
+
+
+---
+
+class:  center, middle
+
+Não deixe de entrar em contato comigo para tirar suas dúvidas: <thiagoan.andrade@gmail.com>
+
+
+# Obrigado!
+
+# Thanks!

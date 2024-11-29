@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Estatística para Farmácia   Unidade V   Teste de Hipóteses</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Prof. Thiago A. N. De Andrade" />
+    <meta name="date" content="2024-11-29" />
+    <script src="Bioestatística-Unidade-V_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Estatística para Farmácia <br/> Unidade V <br/> Teste de Hipóteses
+]
+.author[
+### Prof. Thiago A. N. De Andrade
+]
+.institute[
+### Universidade Federal de Santa Maria <br/> Departamento de Estatística
+]
+.date[
+### 2024-11-29
+]
+
+---
+
+
+
+
+
+
+###  Aviso aos estudantes
+
+&lt;style type="text/css"&gt;
+
+body {
+  text-align: justify;
+}
+
+&lt;/style&gt;
+
+
+&lt;style type="text/css"&gt;
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+&lt;/style&gt;
+
+
+&gt; - Este é um material novo e atualizado, elaborado especialmente para nosso curso **Estatística para Farmácia - UFSM 2024.2**. Entretanto, **não se configura em conteúdo original**. É apenas uma compilação resumida de conteúdos presentes nas referências citadas. Em resumo: é indispensável consultar as referências indicadas.
+
+&gt; - As imagens não são autorais e os respectivos créditos são reservados aos autores.
+
+
+&gt; - Este material foi integralmente produzido em  `R Markdown`, utilizando o pacote `xaringan`, que possibilita a criação de apresentações **ninja**.
+
+---
+
+class: middle
+
+# UNIDADE 5 - TESTE DE HIPÓTESES
+
+---
+
+class: middle
+
+## 5.1 - Para Médias, Teste t Pareado, Testes para Proporção
+
+---
+
+class: middle
+
+### Introdução ao Teste de Hipóteses
+
+O teste de hipóteses é uma metodologia estatística que permite tomar decisões sobre parâmetros populacionais com base em dados amostrais. O processo envolve formular duas hipóteses: a hipótese nula ( `\(H_0\)` ) e a hipótese alternativa ( `\(H_a\)` ).
+
+- **Hipótese Nula ( `\(H_0\)` )**: É a hipótese que assumimos ser verdadeira até que tenhamos evidências contrárias.
+
+- **Hipótese Alternativa ( `\(H_a\)` )**: É a hipótese que queremos testar, que representa uma diferença ou efeito.
+
+---
+
+class: middle
+
+### Passos para Teste de Hipóteses
+
+#### 1. **Formular as Hipóteses**:
+   - `\(H_0\)`: `\(\mu = \mu_0\)`
+   - `\(H_a\)`: `\(\mu \neq \mu_0\)`, `\(\mu &gt; \mu_0\)` ou `\(\mu &lt; \mu_0\)`
+
+#### 2. **Escolher o Nível de Significância ( `\(\alpha\)` )**:
+   - Comumente usado: 0.05, 0.01
+
+---
+
+class: middle
+
+#### 3. **Calcular a Estatística de Teste**:
+
+   - Para médias, usar o teste z ou t, dependendo se a variância populacional é conhecida ou desconhecida.
+
+#### 4. **Determinar a Região Crítica ou Valor-p**:
+
+   - Com base na distribuição da estatística de teste.
+
+#### 5. **Tomar a Decisão**:
+
+   - Rejeitar `\(H_0\)` se a estatística de teste cair na região crítica ou se o valor-p for menor que `\(\alpha\)`.
+
+
+---
+
+class: middle
+
+### Teste para a Média com Variância Populacional Conhecida (Teste Z)
+
+$$ z = \frac{\overline{x} - \mu_0}{\frac{\sigma}{\sqrt{n}}} $$
+
+em que:
+
+- `\(\overline{x}\)` é a média amostral,
+- `\(\mu_0\)` é a média populacional sob `\(H_0\)`,
+- `\(\sigma\)` é o desvio padrão populacional,
+- `\(n\)` é o tamanho da amostra.
+
+---
+
+class: middle
+
+### Exemplo
+
+Um fabricante afirma que o peso médio dos seus comprimidos é de 500 mg. Um farmacêutico quer testar essa afirmação. Ele coleta uma amostra de 30 comprimidos, com uma média de 495 mg e um desvio padrão populacional de 10 mg. Usando um nível de significância de 0.05, teste a hipótese.
+
+---
+
+class: middle
+
+**Solução:**
+
+- `\(H_0: \mu = 500\)`
+- `\(H_a: \mu \neq 500\)`
+
+$$ z = \frac{495 - 500}{\frac{10}{\sqrt{30}}} $$
+
+$$ z = \frac{-5}{\frac{10}{\sqrt{30}}} $$
+
+
+$$ z = -2.73 $$
+
+Para  `\(\alpha = 0.05\)`, os valores críticos são `\(\pm 1.96\)`. Como `\(-2.73\)` é menor que `\(-1.96\)`, rejeitamos `\(H_0\)`.
+
+---
+
+class: middle
+
+### Teste t para a Média (Variância Populacional Desconhecida)
+
+$$ t = \frac{\overline{x} - \mu_0}{\frac{s}{\sqrt{n}}} $$
+
+em que:
+- `\(\overline{x}\)` é a média amostral,
+- `\(\mu_0\)` é a média populacional sob `\(H_0\)`,
+- `\(s\)` é o desvio padrão amostral,
+- `\(n\)` é o tamanho da amostra.
+
+---
+
+class: middle
+
+### Exemplo
+
+Uma clínica afirma que o tempo médio de espera é de 20 minutos. Um farmacêutico quer testar essa afirmação. Ele coleta uma amostra de 16 pacientes, com uma média de 18 minutos e um desvio padrão de 4 minutos. Usando um nível de significância de 0.05, teste a hipótese.
+
+---
+
+class: middle
+
+**Solução:**
+
+- `\(H_0: \mu = 20\)`
+- `\(H_a: \mu \neq 20\)`
+
+$$ t = \frac{18 - 20}{\frac{4}{\sqrt{16}}} $$
+
+
+$$ t = -2 $$
+
+Para `\(\alpha = 0.05\)` e 15 graus de liberdade, os valores críticos são `\(\pm 2.131\)`. Como `\(-2\)` está dentro do intervalo crítico, não rejeitamos `\(H_0\)`.
+
+---
+
+class: middle
+
+### Teste t Pareado
+
+Usado quando temos duas amostras dependentes, como medidas antes e depois de um tratamento no mesmo grupo de indivíduos.
+
+$$ t = \frac{\overline{d}}{\frac{s_d}{\sqrt{n}}} $$
+
+em que:
+- `\(\overline{d}\)` é a média das diferenças,
+- `\(s_d\)` é o desvio padrão das diferenças,
+- `\(n\)` é o número de pares.
+
+---
+
+class: middle
+
+### Exemplo
+
+Um estudo quer verificar se um novo medicamento reduz a pressão arterial. Dez pacientes têm suas pressões medidas antes e depois do tratamento. As diferenças (antes - depois) têm uma média de 8 mmHg e um desvio padrão de 3 mmHg. Teste a hipótese com `\(\alpha = 0.01\)`.
+
+---
+class: middle
+
+**Solução:**
+
+- `\(H_0: \mu_d = 0\)`
+- `\(H_a: \mu_d \neq 0\)`
+
+$$ t = \frac{8}{\frac{3}{\sqrt{10}}} $$
+
+$$ t = \frac{8}{0.9487} $$
+
+$$ t = 8.43 $$
+
+Para `\(\alpha = 0.01\)` e 9 graus de liberdade, o valor crítico é `\(\pm 3.25\)`. Como `\(8.43\)` é maior que `\(3.25\)`, rejeitamos `\(H_0\)`.
+
+---
+
+class: middle
+
+### Teste para Proporção
+
+$$ z = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0 (1 - p_0)}{n}}} $$
+
+em que:
+- `\(\hat{p}\)` é a proporção amostral,
+- `\(p_0\)` é a proporção populacional sob `\(H_0\)`.
+
+---
+
+class: middle
+
+### Exemplo
+
+Um estudo afirma que 40% dos pacientes preferem um certo medicamento. Uma amostra de 200 pacientes revelou que 90 preferem o medicamento. Usando um nível de significância de 0.05, teste a hipótese.
+
+---
+
+class: middle
+
+**Solução:**
+
+- `\(H_0: p = 0.40\)`
+- `\(H_a: p \neq 0.40\)`
+
+$$ \hat{p} = \frac{90}{200} = 0.45 $$
+
+$$ z = \frac{0.45 - 0.40}{\sqrt{\frac{0.40 \cdot 0.60}{200}}} $$
+
+$$ z = 1.44 $$
+
+Para `\(\alpha = 0.05\)`, os valores críticos são `\(\pm 1.96\)`. Como `\(1.44\)` está dentro do intervalo crítico, não rejeitamos `\(H_0\)`.
+
+
+
+---
+class: middle
+
+### Referências
+
+
+
+- [**Conceitos e análises estatísticas com R e JASP**](https://bookdown.org/luisfca/docs/)
+
+- [**Regression Modelling for Biostatistics**](https://bookdown.org/stephane_heritier/RM1TEST/)
+
+
+- [**Amostragem: Teoria e prática usando o `R`**](https://amostragemcomr.github.io/livro/index.html)
+
+- [** `R` para Cientistas Sociais **](http://www.uesc.br/editora/livrosdigitais_20140513/r_cientistas.pdf)
+
+
+---
+
+class:  center, middle
+
+Não deixe de entrar em contato comigo para tirar suas dúvidas: &lt;thiagoan.andrade@gmail.com&gt;
+
+
+# Obrigado!
+
+# Thanks!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -8,6 +8,9 @@ const icons = require('file-icons-js')
 // The index used to store the folder content. Other values will be read as folder names.
 const contentIndex = "contentItemsList"
 
+// The folder name used to store HTML content.
+const htmlFoderName = "html-content"
+
 // Returns default text for no content.
 function getNoContentText() {
     return "<p>Lista de conteúdos vazia :(</p>"
@@ -55,7 +58,7 @@ function convertFilenameToTitle(filename) {
         .replace(
             /\w\S*/g,
             function (txt) {
-                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                return txt.charAt(0).toUpperCase() + txt.substr(1);
             }
         )
 }
@@ -66,15 +69,20 @@ function checkIsHtmlFile(item) {
 }
 
 // Creates a map of the folder and its files -> { folder1: {folder2...}, "": [my files...]}.
-async function createListMap(basePath, treeData, hasHtmlFile = false) {
+async function createListMap(basePath, treeData) {
     let listMap = {}
     listMap[contentIndex] = []
 
-    if (hasHtmlFile) {
-        treeData = treeData.filter(item => {
-            return checkIsHtmlFile(item)
-        });
-    }
+    const nodeHasAnyHtml = treeData.some(item => {
+        const lastIndexSplit = splitLastIndex(item.path, "/")
+
+        // Check if the iteration is in the right depth
+        if (lastIndexSplit.length != 2 || basePath != lastIndexSplit[0]) {
+            return false
+        }
+
+        return checkIsHtmlFile(item);
+    })
 
     for (let [key, item] of Object.entries(treeData)) {
         const itemPaths = item.path.split("/")
@@ -87,15 +95,20 @@ async function createListMap(basePath, treeData, hasHtmlFile = false) {
 
         delete treeData[key]
 
+        if (nodeHasAnyHtml && !checkIsHtmlFile(item)) {
+            continue
+        }
+
         if (item.type == "tree") {
             const folderName = itemPaths.slice(-1).pop()
-            if (folderName == contentIndex) {
-                continue
+
+            if (folderName == htmlFoderName) {
+                // Adds HTML items to the parent folder
+                listMap[contentIndex].push(
+                    (await createListMap(item.path, treeData))[contentIndex])
+            } else if (folderName != contentIndex) {
+                listMap[folderName] = await createListMap(item.path, treeData)
             }
-            const hasAnyHtmlFile = treeData.some(item => {
-                return checkIsHtmlFile(item);
-            })
-            listMap[folderName] = await createListMap(item.path, treeData, hasAnyHtmlFile)
             continue
         }
 
