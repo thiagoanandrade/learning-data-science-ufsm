@@ -2,9 +2,7 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-@import
-  "minima/skins/{{ site.minima.skin | default: 'classic' }}",
-  "minima/initialize";
+@import "minima/skins/{{ site.minima.skin | default: 'classic' }}", "minima/initialize";
 
 details {
   width: 620px;
@@ -42,29 +40,30 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 details[open] > summary {
-  background-color: #555; /* Slightly lighter background */
+  background-color: #555;
   margin-bottom: 1em;
 }
 /* Media Query for smaller screens */
 @media (max-width: 768px) {
   details {
-    width: 100%; /* Full width on small screens */
+    margin: auto;
+    width: 95%;
   }
 }
-
 a.back-button {
-  display: inline-block;
+  float: right;
   padding: 6px 12px;
   margin: 8px 0;
-  background-color: #e0e0e0; /* Light grey background */
-  color: #333; /* Dark grey text */
+  background-color: #003366;
+  color: #fff;
   text-align: center;
-  text-decoration: none; /* Remove underline */
-  border-radius: 3px; /* Slightly rounded corners */
-  font-family: "Arial", sans-serif; /* Match site font */
-  font-size: 14px; /* Match site font size */
-  transition: background-color 0.3s ease; /* Smooth transition */
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
+
 a.back-button:hover {
-  background-color: #d0d0d0; /* Slightly darker grey on hover */
+  background-color: #002244;
 }
