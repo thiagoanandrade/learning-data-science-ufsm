@@ -12,6 +12,9 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: true
+  github_document:
+    html_preview: false
+
 header-includes:
 - \usepackage{tikz}
 - \usepackage{geometry}

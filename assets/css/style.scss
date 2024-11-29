@@ -51,3 +51,20 @@ details[open] > summary {
     width: 100%; /* Full width on small screens */
   }
 }
+
+a.back-button {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 8px 0;
+  background-color: #e0e0e0; /* Light grey background */
+  color: #333; /* Dark grey text */
+  text-align: center;
+  text-decoration: none; /* Remove underline */
+  border-radius: 3px; /* Slightly rounded corners */
+  font-family: "Arial", sans-serif; /* Match site font */
+  font-size: 14px; /* Match site font size */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+a.back-button:hover {
+  background-color: #d0d0d0; /* Slightly darker grey on hover */
+}

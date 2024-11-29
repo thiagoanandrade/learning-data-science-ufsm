@@ -120,7 +120,7 @@ async function createListMap(basePath, treeData, hasHtmlFile = false) {
 
 // Creates a return button.
 function getReturnButton() {
-    return `<a href="./" style="float:right;">Voltar</a>`
+    return `<a href="./" class="back-button">Voltar</a>`
 }
 
 // Formats the tag according to the folder's depth.
