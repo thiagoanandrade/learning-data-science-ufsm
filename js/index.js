@@ -6,7 +6,7 @@ const baseRawURL = `https://raw.githubusercontent.com/${repo}/refs/heads/main`
 const baseFolder = "docs"
 
 // Loads the file extension icons library.
-const icons = require('file-icons-js')
+const icons = window.FileIcons
 
 // The index used to store the folder content. Other values will be read as folder names.
 const contentIndex = "contentItemsList"
@@ -125,10 +125,8 @@ async function createListMap(basePath, treeData) {
         }
 
         const title = convertFilenameToTitle(lastIndexSplit[1])
-        const extensionIcon = await icons.getClass(lastIndexSplit[1])
-        if (lastIndexSplit[1].split(".")[1] == "Rmd") {
-            console.log("item:", item)
-        }
+        const fileExtension = item.path.split('.').pop()
+        const extensionIcon = icons.getClassWithColor(item.path)
 
         if (redirectToRaw(item.path)) {
             item.path = `${baseRawURL}/${item.path}`
@@ -137,8 +135,8 @@ async function createListMap(basePath, treeData) {
         // Adds the list item to the map
         listMap[contentIndex].push(
             `<li>
-                <a href="${item.path}">${title}</a>
-                <i class="${extensionIcon}"></i>
+                <a href="${item.path}">${title}.${fileExtension}</a>
+                <i style="font-style:normal" class="${extensionIcon}"></i>
             </li>`
         )
     }
